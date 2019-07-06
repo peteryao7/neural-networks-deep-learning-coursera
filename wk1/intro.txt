@@ -1,0 +1,14 @@
+Welcome
+
+AI: The new Electricity
+    - Has transformed countless industries
+        - Transportation, manufacturuing, health care, communications, etc.
+
+"Specialization" on Coursera
+    - 1) Neural Networks and Deep Learning (this course) 4 wks
+        - How to build a deep neural network and train it on data (cat recognizer)
+    - 2) Improving Deep Neural Networks 3 wks
+        - Hyperparameter tuning, Regularization and Optimization
+    - 3) Structuring your ML project 2 wks
+    - 4) Convolutional Neural Networks 4 wks
+    - 5) NLP: Building sequence models 3 wks

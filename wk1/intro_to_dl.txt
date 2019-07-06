@@ -1,0 +1,83 @@
+What is a Neural Network?
+
+Ex: Housing Price Prediction
+    - size of house x-axis, price y-axis (want to predict)
+    - can use linear regression to draw a line to fit the data
+    - to prevent negative price predictions, can say it's 0 before intersecting x-axis
+        - this model is a ReLU - Rectified Linear Unit
+
+    - the function to fit the data can be thought of as a simple neural network
+        - input to NN is the size of house x
+        - goes into a neuron (a circle), which computes a linear function and takes a max 0
+        - output too NN is the price y
+    - stacking these neurons constructs a neural network
+
+3 examples of neurons
+    - input: size, # bedrooms; output: family size
+    - input: zip code; output: walkability
+    - input: zip code, wealth; output: school quality
+    - input: family size, walkability, school quality; output: price
+
+Inputs and outputs can start intersecting and thus creating a network
+    - every input layer is interconnected to every node in the middle layer.
+
+Very useful in supervised learning incentives, where you're mapping an x to a y.
+
+----------
+
+Supervised Learning with Neural Networks
+
+Have an input x, want a function to map to output y
+
+Examples with different neural networks:
+    - home features to price for real estate - standard NN
+    - ad and user info to ad clicked? (0/1) for online advertising - standard NN
+    - image to identify object (1,...,1000) for photo tagging/computer vision - CNN
+    - audio to text transcript for speech recognition - RNN for temporal/sequence data
+    - English to Chinese for machine translation - RNN
+    - image and radar info to position of other cars for autonomous driving - CNN
+
+Structured vs. Unstructured data
+    - structured data is comprised of databases, every feature has a well-defined meaning for each example
+    - unstructured data: audio, image, text
+        - harder for computers to make sense of this information
+        - easy for people to interpret
+
+Thanks to NN, computers are now much better at interpreting unstructured data
+    - very good for speech recognition, image recognition, NLP on text
+    - people are more empathetic towards this b/c we're already so good at it
+
+----------
+
+Why is Deep Learning Taking Off?
+
+Ex: scale drives deep learning process
+    - amount of labeled data x-axis, performance y-axis
+    - for a traditional learning algorithm like sum, logistic regression etc., the performance plateaus. 
+    - for a small neural net, the performance is a bit better
+    - for a medium neural net, the performance is even better
+    - for a large neural net, the performance works very well for large amounts of data
+        - to get better performance in the NN, either train a bigger network or throw more data at it
+        - but that only works up to a point, since you'll either run out of data or the networks takes too long to train it
+
+    - in the regime of small training sets, it's more important to engineering good features than making the training algorithm
+
+Early days of modern deep learning
+    - scaled data
+    - scaled computation
+    - algorithms
+        - switching from a sigmoid function from ML to a ReLU function
+        - problem at the ends of the sigmoid function, where the ends have a gradient of almost 0 and the params change very slowly
+        - ReLU makes gradient descent work much faster
+
+----------
+
+About this Course
+
+10 MC quiz at end of week
+3 programming assignments for wks 2-4
+
+wk1 - intro
+wk2 - basics of NN programming
+wk3 - one hidden layer of a NN
+wk4 - deep NN w/ many layers
