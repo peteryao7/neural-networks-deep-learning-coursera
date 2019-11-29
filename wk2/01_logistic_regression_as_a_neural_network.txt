@@ -1,0 +1,120 @@
+Binary Classification
+
+How to process a training set with m training examples without a for loop.
+
+Input: some image
+Output: a label (0/1)
+
+Ex: Cat photos
+    - input x: an image represented by 3 matrices of red/green/blue pixel values
+    - output y: 1 (cat) vs. 0 (not cat)
+
+    - unrolling the matrices into a feature vector x
+        - define a vector x = [ all red values   ]
+                              [ all green values ]
+                              [ all blue values  ]
+        - now have a vector (m x n x 3) x 1 vector
+
+Notation
+    - (x, y) represents a single training pair, where x ∈ R^(n_x) and y ∈ {0,1}
+    - m = m_train represents the number of training examples in your training set
+    - {(x^(1), y^(1)), (x^(2), y^(2)), ..., (x^(m), y^(m)} is the training set
+    - capital X is the matrix with stacked training inputs
+        X = [  |     |   ...   |  ]
+            [x^(1) x^(2) ... x^(m)]
+            [  |     |   ...   |  ]
+
+                X ∈ R^(n_x x m)
+    
+        Y = [y^(1) y^(2) ... y^(m)]
+        Y ∈ R^(1xm)
+        Y.shape = (1,m)
+
+==================================================
+
+Logistic Regression
+
+Given an input feature vector x (image), want ŷ = P(y=1|x) where 0 <= ŷ <= 1.
+
+Parameters:
+    w ∈ R^(n_x)
+    b ∈ R
+
+Output: ŷ = σ(w^Tx + b), where w^Tx + b = z
+
+Sigmoid function
+    σ(z) = 1 / (1 + e^(-z))
+    - If z is large, σ(z) ≈ 1/(1+0) = 1
+    - If z is a large negative number, σ(z) = 1 / (1+e^-z) ≈ 1 / (1 = bignum) ≈ 0
+
+In other places, you may see x_0 = 1, x ∈ R^(n_x+1)
+ŷ = σ(θ^Tx), θ = [θ_0; θ_1;...;θ_(n_x)]
+where b = θ_0 and w = [θ_1;...;θ_(n_x)]
+like in the ML course, but we won't use this notation.
+
+==================================================
+
+Logistic Regression Cost Function
+
+Used to train parameters w and b of the logistic regression model.
+
+ŷ^(i) = σ(w^T*x^(i) + b), where σ(z^(i)) = 1 / (1 + e^(-z^(i)))
+Given {(x^(1), y^(1)), ... (x^(m), y^(m))}, want ŷ^(i) ≈ y^(i).
+
+Loss (error) function:
+    - measures how well your algorithm is doing
+
+    - one sample function: ℒ(ŷ, y) = 1/2 * (ŷ-y)^2
+        - squared error
+        - not that great, the optimization problem becomes non-convex and leads to multiple local optima
+        - so gradient descent may not find the global optimum
+
+    ℒ(ŷ,y) = -(y*log(ŷ) + (1-y) * log(1-ŷ))
+        - if y=1, ℒ(ŷ, y) = -log(ŷ), meaning you want log(ŷ) to be large, and ŷ to be large
+        - if y=0, ℒ(ŷ, y) = -log(1-ŷ), meaning you want log(1-ŷ) to be large, and ŷ to be small
+
+Cost function: J(w,b) = (1/m) * sum(i=1, m) ℒ(ŷ^(i), y^(i))
+                      = (-1/m) * sum(i=1, m) [y^(i) * log(ŷ^(i)) + (1-y^(i)) * log(1-ŷ^(i))]
+
+The loss function computes the error for one training example.
+The cost function is the average of the loss functions of the whole training set.
+We want to find paramters w and b that minimize J.
+
+==================================================
+
+Gradient Descent
+
+Using GD to train/learn the parameters w and b on our training set.
+
+Recap:
+    ŷ = σ(w^Tx + b), where w^Tx + b = z, and σ(z) = 1/(1+e^-z)
+    J(w,b) = (1/m) * sum(i=1, m) ℒ(ŷ^(i), y^(i))
+           = (-1/m) * sum(i=1, m) [y^(i) * log(ŷ^(i)) + (1-y^(i)) * log(1-ŷ^(i))]
+
+We want to minimize J by choosing appropriate parameters w, b.
+
+J is a convex function, which is shaped like a bowl with a single global optimum, while a "wiggly" 
+model with a lot of curves is non-convex, as it has a lot of local minima.
+
+We will initialize w and b to some initial value, usually 0 (not random), and gradient descent should
+take a step in the steepest downhill direction from there and converge to the global optimum.
+
+-----
+
+GD algorithm
+
+repeat {
+    w := w - α * ∂J(w,b)/∂w
+    b := b - α * ∂J(w,b)/∂b
+}
+
+α is the learning rate and controls how big a step we take at each iteration.
+The derivative is the update/change you make to w.
+
+In our code, dw will be used as the variable name to represent the derivative of w:
+    w := w - αdw
+    b := w - αdb
+
+Note that the only different between using d and ∂ in calculus is if you're taking the derivative
+of a function with more than one variable. If one, use d, else use ∂. They still mean the same thing
+in the grand scheme of things.
