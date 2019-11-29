@@ -141,3 +141,51 @@ Therefore, d/da f(a) = 3.
 
 Formal mathematical definition of a derivative:
     If you nudge a by an infinitely tiny amount, the function will always go up 3x as much as the nudge.
+
+==================================================
+
+More Derivatives Examples
+
+Let f(a) = a^2
+
+If a=2, then f(a)=4
+If we nudge a like before, say a=2.001, then f(a)≈4.004 (4.004001)
+When we bumped a up .001, f(a) increased by roughtly .004.
+
+The slope (derivative) of f(a) at a=2 is 4.
+d/da f(a) = 4 when a=2.
+
+If a=5, then f(a)=25
+If we nudge a, a=5.001, then f(a)≈25.01
+d/da f(a) = 10 when a=5.
+
+The derivative is now different for different points of a. If we drew the triangles like before,
+they should be getting higher and higher.
+
+d/da f(a) = d/da a^2 = 2*a by power rule.
+
+For the first example, it's only roughly 4.004 and not exactly is because the derivative being 2*a
+is for infinitesimally small nudges. If we instead nudged a to that caliber, then that extra term
+will go away and you'll find the derivative is precise.
+
+-----
+
+More examples
+
+If f(a) = a^3, then d/da f(a) = 3*a^2
+If a=2, then f(a)=8.
+If a=2.001, then f(a)≈8.012
+3*2^2 = 12, and it did go up 12x as much.
+
+If f(a) = log(a), then d/da f(a) = 1/a
+If a=2, then f(a)≈0.69315
+If a=2.001, then f(a)≈0.69365, so it went up by .0005.
+If you bumped a up by .001, then you only expect it to go up by half as much, which here is the case.
+
+-----
+
+The derivative of a function is just the slope of the function, and it can be different for various
+points in the function.
+
+If you want to look up the derivative of a function, you can look them up (or use your knowledge
+from your calc 1 course).
