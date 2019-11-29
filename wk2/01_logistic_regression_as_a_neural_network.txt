@@ -217,3 +217,44 @@ Say a=5, b=3, c=2. Then u=3*2=6, then v=5+6=11, then J=3*11=33.
 Through a left-to-right pass, we can compute J.
 To compute derivatives, we will do a right-to-left pass instead. It's similar to reversing the
 arrows above and computing the derivatives starting with J.
+
+==================================================
+
+Derivatives with a Computation Graph
+
+a               ->
+
+b   ->              v = a+u  ->  J = 3v
+        u = bc  ->
+c   ->
+
+Let a=5, b=3, c=2
+Then for J = 3v, v=11
+If we bump up v to 11.001, then J=33.003
+J goes up 3x as much, so dJ/dv = 3
+
+After computing dJ/dv, we've done one step of BP.
+
+Now, what is dJ/da?
+a=5, bump up to 5.001
+v=11, bumped up to 11.001
+J=33, bumped up to 33.003
+So the amount we nudged up J, .003, is 3x the amount we nudged up a.
+So dJ/da = 3
+
+Another way to illustrate this is the chain rule:
+(dJ/dv)(dv/da) = dJ/da, dv cancels out
+Here, dv/da = 1
+
+What is dJ/du?
+u=6 -> 6.001
+v=11 -> 11.001
+J=33 -> 33.003
+J went up 3x as much as u did, so dJ/du = 3
+
+dJ/db = dJ/du * du/db = 3 * c = 6, since c=2
+
+Most of the computations you'll have will be taking the derivative of your final output
+variable (J) with the respect to intermediate variables (a, b, c, u, v)
+    - in code, this will be represented as dvar instead of something like dJdvar
+    - so dJ/da is "da" and dJ/dv is "dv"
