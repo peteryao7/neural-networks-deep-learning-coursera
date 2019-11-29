@@ -118,3 +118,26 @@ In our code, dw will be used as the variable name to represent the derivative of
 Note that the only different between using d and ∂ in calculus is if you're taking the derivative
 of a function with more than one variable. If one, use d, else use ∂. They still mean the same thing
 in the grand scheme of things.
+
+==================================================
+
+Derivatives
+
+Say you have a graph f(a) = 3*a.
+If a = 2, then f(a) = 6.
+Now let's bump up a bit, to a = 2.001, then f(a) = 6.003.
+
+You can make a triangle with that nudge, where you increased a by 0.001 (run), then 
+the height (rise) went up by .003.
+
+The slope (rise/run), or derivative, of f(a) at a=2 is 3.
+
+Now, let a = 5, then f(a) = 15.
+a = 5.001, then f(a) = 15.003.
+When we nudged 5 by .001, then f(a) went up by .003. 
+So the slope at a=5 is also 3. 
+
+Therefore, d/da f(a) = 3.
+
+Formal mathematical definition of a derivative:
+    If you nudge a by an infinitely tiny amount, the function will always go up 3x as much as the nudge.
