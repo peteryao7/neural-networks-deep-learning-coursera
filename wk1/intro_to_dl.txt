@@ -23,7 +23,7 @@ Inputs and outputs can start intersecting and thus creating a network
 
 Very useful in supervised learning incentives, where you're mapping an x to a y.
 
-----------
+==================================================
 
 Supervised Learning with Neural Networks
 
@@ -47,7 +47,7 @@ Thanks to NN, computers are now much better at interpreting unstructured data
     - very good for speech recognition, image recognition, NLP on text
     - people are more empathetic towards this b/c we're already so good at it
 
-----------
+==================================================
 
 Why is Deep Learning Taking Off?
 
@@ -70,7 +70,7 @@ Early days of modern deep learning
         - problem at the ends of the sigmoid function, where the ends have a gradient of almost 0 and the params change very slowly
         - ReLU makes gradient descent work much faster
 
-----------
+==================================================
 
 About this Course
 
