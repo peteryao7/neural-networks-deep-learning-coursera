@@ -258,3 +258,33 @@ Most of the computations you'll have will be taking the derivative of your final
 variable (J) with the respect to intermediate variables (a, b, c, u, v)
     - in code, this will be represented as dvar instead of something like dJdvar
     - so dJ/da is "da" and dJ/dv is "dv"
+
+==================================================
+
+Logistic Regression Gradient Descent
+
+How to compute derivatives for GD in logistic regression.
+
+Recap:
+    z = w^T*x + b
+    ŷ = a = σ(z)
+    ℒ(a,y) = -(y*log(a) + (1-y) * log(1-a))
+
+x_1
+w_1
+x_2  ->  z = w_1*x_1 + w_2*x_2 + b  ->  ŷ = a = σ(z)  ->  ℒ(a,y)
+w_2
+b
+
+We want to compute:
+da = dℒ(a,y)/da = -y/a + (1-y)/(1-a)
+dz = dℒ(a,y)/dz = dℒ/da * da/dz = (-y/a + (1-y)/(1-a)) * a(1-a) = a - y
+
+Then we want to know how much to change w and b:
+dw_1 = ∂L/∂w_1 = x_1 * dz
+dw_2 = x_2 * dz
+db = dz
+
+w_1 := w_1 - α*dw_1;
+w_2 := w_2 - α*dw_2;
+b := b - α*db;
