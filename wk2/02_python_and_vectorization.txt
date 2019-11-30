@@ -110,3 +110,29 @@ dw = np.zeros((n_x,1))
 dw += x^(i) * dz^(i)
 
 dw /= m to take the average.
+
+==================================================
+
+Vectorizing Logistic Regression
+
+Implementing GD without a for loop
+
+Want to compute z^(i) = w^T*x^(i) + b, a^(i) = σ(z^(i)) for each training example
+
+X = [x^(1); x^(2); ...; x^(m)] with a column for each x, X ∈ R^(n_x x m)
+[z^(1) z^(2) ... z^(m)] = w^T * X + [b b ... b], where the b matrix is a 1 x m row vector
+w^T is also a row vector of size 1 x n_x, and w^T * X results in a 1 x m row vector
+
+Once you calculate everything, you get all the z values for z^(1), z^(2), ..., z^(m) 
+in a single row matrix, stacked horizontally.
+
+Z = np.dot(w.T, x) + b // w.T is the transpose and b is a real number, not a row vector
+Python will convert b to a row vector automatically, called broadcasting.
+
+Now to compute a^(1), a^(2), ..., a^(m)
+We will define a row vector A = [a^(1) a^(2) ... a^(m)] = σ(Z), and calculate all a^(i)'s at the same time.
+
+==================================================
+
+Vectorizing Logistic Regression's Gradient Computation
+
