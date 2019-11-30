@@ -172,3 +172,66 @@ GD update (still requires a loop):
 for i in range(m):
     w := w - α*dw
     b := b - α*db
+
+==================================================
+
+Broadcasting in Python
+
+Example: calories from carbs, proteins, fats in 100g of different foods
+
+       apples    beef    eggs    potatoes
+carb [  56.0      0.0     4.4      68.0   ]
+prot [  1.2      104.0   52.0       8.0   ]     = A ∈ R^(3x4)
+fat  [  1.8      135.0   99.0       0.9   ]
+Sum:    59.0     139.0   155.4     76.9
+
+We want to calculate % calories from carbs, proteins, and fats
+For example, 56/59 ≈ 94.9%, so about 95% of an apple's calories come from carbs
+Can you do this without an explicit for loop in Python?
+
+-----
+
+import numpy as np
+A = np.array([56.0, 0.0, 4.4, 68.0], 
+             [1.2,104.0,52.0,8.0],
+             [1.8,135.0,99.0,0.9])
+
+cal = A.sum(axis=0) // calculates the column sums
+    // cal = [59. 239. 155.4 76.9]
+percentage = 100 * A / cal.reshape(1,4)
+    // cal is technically already a 1x4 matrix, so reshape isn't necessary here
+    // but reshape will modify the dimensions of the matrix so you can perform the necessary operations on it
+    // we get our result matrix
+
+axis = 0: summing columns
+axis = 1: summing rows
+
+-----
+
+More broadcasting examples
+
+[1;2;3;4] + 100 = [1;2;3;4] + [100;100;100;100] = [101;102;103;104]
+
+[1 2 3; 4 5 6] + [100 200 300]
+    (m x n)         (1 x n)
+Python will copy the second matrix m times to turn it from 1xn to mxn. 
+It copies the row and appends new rows, so now the addition is:
+[1 2 3; 4 5 6] + [100 200 300; 100 200 300] = [101 202 303; 104 205 306]
+
+[1 2 3; 4 5 6] + [100; 200]
+    (m x n)        (m x 1)
+Python will copy the second matrix n times to turn it from mx1 to mxn.
+It copies the column and appends new columns, so now the addition is:
+[1 2 3; 4 5 6] + [100 100 100; 200 200 200] = [101 102 103; 204 205 206]
+
+-----
+
+General Principle
+
+For an (m,n) matrix, if you want to perform the operations +-*/ on vectors (1,n) or (m,1), 
+then the vectors will be broadcasted to an (m,n) matrix.
+
+For a (m,1) vector, for the same operations +-*/ on a real number, then
+the number will be turned into a (m,1) vector.
+
+Matlab/Octave: bsxfun is a similar function to broadcasting in Python
