@@ -288,3 +288,71 @@ db = dz
 w_1 := w_1 - α*dw_1;
 w_2 := w_2 - α*dw_2;
 b := b - α*db;
+
+==================================================
+
+Gradient Descent on m Examples
+
+J(w,b) = 1/m * sum(i=1, m) ℒ(a^(i),y)
+a^(i) = ŷ^(i) = σ(z^(i)) = σ(w^T*x^(i) + b)
+∂/∂w_1 J(w,b) = 1/m * sum(i=1, m) ∂/∂w_i ℒ(a^(i),y^(i))
+    where the sum is calculated by d*w_1^(i) - (x^(i),y^(i))
+
+-----
+
+Code
+
+J = 0, dw_1 = 0, dw_2 = 0, db = 0
+for i = 1:m
+    z^(i) = w^T*x^(i) + b
+    a^(i) = σ(z^(i))
+    J += -[y^(i) * log(a^(i)) + (1-y^(i)) * log(1-a^(i))]
+    dz^(i) = a^(i) - y^(i)
+    dw_1 += x_1^(i) * dz^(i)
+    dw_2 += x_2^(i) * dz^(i)
+    db += dz^(i)
+end
+
+J /= m, dw_1 /= m, dw_2 /= m, db /= m to compute averages
+
+We're using dw_1 and dw_2 as accumulators, where:
+dw_1 = ∂J/∂w_1
+dw_2 = ∂J/∂w_2
+
+whereas dz has a superscript, since it's for one training example.
+
+Then
+w_1 := w_1 - α*dw_1
+w_2 := w_2 - α*dw_2
+b := b - α*db
+
+We would have 2 for loops, one we have for each training example, and another for
+dw for each feature. In our case, we only had 2 features, so we only needed to calculate 
+dw_1 and dw_2, but ideally we'd calculate those over a loop.
+
+==================================================
+
+Derivation of dL/dz = a - y
+
+By chain rule, dL/dz = dL/da * da/dz
+
+Solve for dL/da:
+    L = -(y*log(a) + (1-y)*log(1-a))
+Take derivative with respect to a:
+    dL/da = -y * 1/a - (1-y) * 1/(1-a) * -1
+          = -y/a + (1-y)/(1-a)
+Multiply each fraction by 1:
+    dL/da = [-y*(1-a)] / a*(1-a)] + a*(1-y) / a*(1-a)
+          = (-y + ay + a - ay) / (a*(1-a))
+          = (a-y) / (a*(1-a))
+Now calculate da/dz:
+    da/dz = d/dz σ(z)
+The derivative of the sigmoid is:
+    d/dz σ(z) = σ(z) * (1-σ(x))
+And since σ(z) = a since we defined "a" as the activation, we can substitute it in:
+    da/dz = a(1 - a)
+
+Now we can calculate dL/dz via the chain rule:
+    dL/dz = dL/da * da/dz
+          = (a-y) / (a*(1-a)) * a*(1-a)
+          = a - y
