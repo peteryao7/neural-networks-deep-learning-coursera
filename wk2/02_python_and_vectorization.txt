@@ -235,3 +235,42 @@ For a (m,1) vector, for the same operations +-*/ on a real number, then
 the number will be turned into a (m,1) vector.
 
 Matlab/Octave: bsxfun is a similar function to broadcasting in Python
+
+==================================================
+
+A Note on Python/numpy Vectors
+
+Broadcasting can introducing strange bugs if you aren't aware of how it really works.
+You might expect a calculation to not work without broadcasting and return an error, but
+sometimes it can return valid output because of broadcasting, but is actually wrong.
+
+-----
+
+import numpy as np
+
+a = np.random.randn(5) // 5 random Gaussian variables, NOT a vector [# # # # #]
+a.shape // gives the length of a rank 1 array, not a vector
+print(a.T) // ends up looking the same as a [# # # # #]
+np.dot(a,a.T) // returns a number, not a matrix
+
+Instead set a = np.random.randn(5,1) to get a column vector instead.
+Now a.T returns a 1x5 row vector [[# # # # #]] (note the double brackets)
+np.dot(a,a.T) // 5x5 matrix
+
+-----
+
+A rank 1 array is not a row or column vector. Avoid using them.
+Instead, create vectors by specifying 2 parameters as your vector dimensions.
+
+a = np.random.randn(5,1) returns a 5x1 column vector, where a.shape = (5,1)
+a = np.random.randn(1,5) returns a 1x5 row vector, where a.shape = (1,5)
+assert(a.shape == (m,n)) to check vector dimensions. Can also serve as documentation. 
+
+If you do end up with a rank 1 array, then you can call reshape on it so it can behave correctly.
+
+==================================================
+
+Quick Tour of Jupyter/iPython Notebooks
+
+Run your imports by running the cell
+Restart the kernel if it's slow
