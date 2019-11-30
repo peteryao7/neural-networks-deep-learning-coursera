@@ -136,3 +136,39 @@ We will define a row vector A = [a^(1) a^(2) ... a^(m)] = σ(Z), and calculate a
 
 Vectorizing Logistic Regression's Gradient Computation
 
+We computed GD by:
+dz^(i) = a^(i) - y^(i) for i = 1,...,m
+
+Again, put it all in a matrix:
+dZ = [dz^(1) dz^(2) ... dz^(m)]
+
+We know how to calculate A = [a^(1) ... a^(m)], and we also defined Y = [y^(1) ... y^(m)]
+
+Therefore, we can just calculate all of dZ as so:
+dZ = A - Y = [a^(1)-y^(1) ... a^(m)-y^(m)]
+with no loops.
+
+Previously, we had to loop through all our training examples in GD. We removed the inner for loop over our
+features by using an accumulator, but we can vectorize the rest of the process in a similar fashion.
+    db = 1/m * sum(i=1, m) dz^(i)
+       = 1/m * np.sum(dZ) // in Python
+    dw = 1/m * X * dZ.T
+
+No more for loops!
+
+-----
+
+Implementing vectorized logistic regression
+
+Z = np.dot(w.T, X) + b
+A = sigmoid(Z)
+dZ = A - Y
+dw = 1/m * X * dZ.T
+db = 1/m * np.sum(dZ)
+
+This implements FP and BP on all m training examples without a for loop.
+
+GD update (still requires a loop):
+for i in range(m):
+    w := w - α*dw
+    b := b - α*db
