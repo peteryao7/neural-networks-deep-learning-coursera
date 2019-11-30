@@ -274,3 +274,34 @@ Quick Tour of Jupyter/iPython Notebooks
 
 Run your imports by running the cell
 Restart the kernel if it's slow
+
+==================================================
+
+Explanation of Logistic Regression Cost Function
+
+ŷ = σ*(w^T*x + b) where σ(z) = 1 / (1 + e^-z)
+Interpret ŷ = P(y=1|x)
+    If y=1: p(y|x) = ŷ
+    If y=0: p(y|x) = 1-ŷ
+
+Take the 2 equations pf P(y|x) and combine them:
+    p(y|x) = ŷ^y * (1-ŷ)^(1-y)
+    If y=1, then ŷ^1 * (1-ŷ)^(1-1) = ŷ * 1 = ŷ
+    If y=0, then ŷ^0 * (1-ŷ)^(1-0) = 1 * (1-ŷ) = 1-ŷ
+
+log(p(y|x)) = log(ŷ^y*(1-ŷ)^(1-y)) = y*log(ŷ) + (1-y) * log(1-ŷ)
+                                   = -ℒ(ŷ,y)
+Minimizing the loss basically means maximizing the log of this probability.
+
+-----
+
+Cost on m examples
+
+p(labels in training set) = prod(i=1, m) p(y^(i)|x^(i))
+Maximizing this is also the same as maximizing its log.
+The log of a product is the sum of the log.
+log(p(...)) = sum(i=1, m) log(p(y^(i)|x^(i)))
+            = -sum(i=1, m) ℒ(ŷ^(i),y^(i))
+
+Cost function:
+minimize J(w,b) = 1/m * sum(i=1, m) ℒ(ŷ^(i),y^(i))
