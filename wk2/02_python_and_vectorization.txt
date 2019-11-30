@@ -1,0 +1,62 @@
+Vectorization
+
+The art of getting rid of explicit folders in your code.
+It's important that your code runs quickly on a big data set, else it'll take a long time
+to get any kind of result.
+
+-----
+
+What is it?
+
+In logistic regression, you need to calculate z = w^T*x+b, and w and x can be long feature vectors,
+where w ∈ R^(n_x) and x ∈ R^(n_x)
+
+In a non-vectorized method:
+z = 0
+for i in range(n_x):
+    z += w[i] * x[i]
+z += b
+
+In a vectorized implementation:
+z = np.dot(w,x) + b // np.dot computes w^T*x
+
+-----
+
+Jupyter demo
+
+import numpy as np
+
+a = np.array([1,2,3,4])
+print(a)
+
+(shift+Enter executes code)
+
+---
+
+import time
+
+a = np.random.rand(1000000)
+b = rp.random.rand(1000000)
+
+tic = time.time()
+c = np.dot(a,b)
+toc = time.time()
+
+print("Vectorized version:" + str(1000 * (toc - tic)) + "ms") // multiply by 1000 since time.time is in seconds
+// prints ~1.478 ms
+
+c = 0
+tic = time.time()
+for i in range(1000000):
+    c += a[i] * b[i]
+toc = time.time()
+
+print("For loop:" + str(1000 * (toc - tic)) + "ms")
+// prints ~474.295 ms for the same calculation, about 300x longer
+
+-----
+
+A lot of scaleable deep learning implementations are done on a GPU, but the demos done on Jupyter use the CPU.
+But it turns out both the GPU and CPU have parallelization instructions, or SIMD instructions.
+If you built-in functions like the np. functions, it enables numpy to take much better advantage of
+parallelism. GPUs are amazing at SIMD calculations, but the CPU isn't bad at it either.
