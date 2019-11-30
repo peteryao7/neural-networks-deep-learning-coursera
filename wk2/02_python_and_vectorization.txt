@@ -60,3 +60,53 @@ A lot of scaleable deep learning implementations are done on a GPU, but the demo
 But it turns out both the GPU and CPU have parallelization instructions, or SIMD instructions.
 If you built-in functions like the np. functions, it enables numpy to take much better advantage of
 parallelism. GPUs are amazing at SIMD calculations, but the CPU isn't bad at it either.
+
+==================================================
+
+More Vectorization Examples
+
+NN programming guideline
+
+Whenever possible, avoid explicit for loops
+Say you want to compute u=A*v where A is a matrix and u a vector
+By the definition of matrix multiplication:
+    u = np.zeros((n,1))
+    for i...
+        for j...
+            u[i] += A[i][j] * v[j]
+We have 2 for loops.
+
+With a vectorized version:
+u = np.dot(A,v)
+Way faster.
+
+-----
+
+Say you need to apply the exponential operation on every element of a matrix/vector:
+v = [v_1; v_2; ...; v_n] and you want u = [e^v_1; ...; e^v_n]
+
+Non-vectorized:
+u = np.zeros((n,1))
+for i in range(n):
+    u[i] = math.exp(v[i])
+
+Vectorized with a built-in numpy function:
+import numpy at np
+u = np.exp(v)
+// np has other useful methods for math, like np.log(v), np.abs(v), np.maximum(v,0), 
+// v ** 2 (element-wise square of each elt in v), 1/v etc.
+
+-----
+
+Logistic regression derivatives
+
+In our previous code, we had a for loop and 2 features inside. If we had a lot more features, we'd
+need an inner for loop to go over all the features.
+
+Instead of the second for loop, we can vectorize the calculations instead of calculating dw_1 and dw_2
+that way.
+
+dw = np.zeros((n_x,1))
+dw += x^(i) * dz^(i)
+
+dw /= m to take the average.
