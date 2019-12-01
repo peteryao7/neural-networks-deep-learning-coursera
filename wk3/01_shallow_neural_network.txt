@@ -218,3 +218,49 @@ If y ∈ R, like the price of a house, then it may be ok to have a linear activa
 can ensure ŷ is also a real number going from -inf to inf. This is in the output layer only.
 
 That doesn't mean the hidden units shouldn't be using a linear activation function. Use ReLU or tanh.
+
+==================================================
+
+Derivatives of Activation Functions
+
+When you implement BP for your NN, you need to compute the derivation of the activation functions.
+
+-----
+
+For the sigmoid function, if you take any value of z, there will be some slope corresponding to its value.
+d/dz g(z) = slope of g(x) at z
+          = (1/(1+e^-z)) * (1-1/(1+e^-z))
+          = g(z) * (1-g(z))
+          = g'(z)
+
+If z = 10, g(z) ≈ 1, then d/dz g(z) ≈ 1 * (1-1) ≈ 0
+If z = -10, g(z) ≈ 0, then d/dz g(z) ≈ 0 * (1-0) ≈ 0
+If z = 0, g(z) = 1/2, then d/dz g(z) = 1/2 * (1-1/2) = 1/4
+
+Also, if a = g(z), then we can rewrite g'(z) as a * (1-a)
+
+-----
+
+For the tanh activation function: g(z) = tanh(z) = (e^z - e^-z) / (e^z + e^-z)
+
+g'(z) = 1 - (tanh(z))^2
+
+If z = 10, g(z) ≈ 1, then g'(z) ≈ 0
+If z = -10, g(z) ≈ -1, then g'(z) ≈ 1 - (-1)^2 ≈ 0
+If z = 0, g(z) = 0, then g'(z) = 1 - 0^2 = 1
+
+-----
+
+For ReLU and leaky ReLU
+
+ReLU:
+g(z) = max(0,z)
+g'(z) = 0 if z < 0
+        1 if z > 0
+        not differentiable if z = 0, but you can set it to be 0 or 1 either way
+
+Leaky ReLU:
+g(z) = max(0.01*z,z)
+g'(z) = 0.01 if z < 0
+        1 if z > 0
+        not differentiable if z = 0, but you can set it to be 0.01 or 1 either way
