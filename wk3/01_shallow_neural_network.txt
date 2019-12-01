@@ -1,0 +1,22 @@
+Neural Networks Overview
+
+Think of the computation graphs from last week. Neural networks are similar, but we
+are stacking some more sigmoid units.
+
+x_1     O
+
+x_2     O   ->   O  ->  ŷ
+
+x_3     O
+
+The first hidden layer
+x
+
+W^[1] -> z^[1] = W^[1]*x + b^[1]  -> a^[1] = σ(z^[1]) -> z^[2] = W^[2]*a^[1] + b^[2] -> a^[2] = σ(z^[2])  ->  ℒ(a^[2],y)
+                                                          ^ with W^[2], b^[2]
+b^[1]
+
+Whereas for logistic regression, we had a z and a calculation, we have multiple z and a calculations
+to calculate the loss function. 
+
+Same thing for using BP to calculate da and dz backwards.
