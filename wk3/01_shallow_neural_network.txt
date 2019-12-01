@@ -191,3 +191,30 @@ activation function, initialization etc.
 
 If you're not sure what works best, try them all out and evaluate on a development set, and see
 which one works better, then go with that.
+
+==================================================
+
+Why Do You Need Non-linear Activation Functions?
+
+For a NN to compute interesting functions, an activation function is necessary.
+
+Say when calculating a^[1] in our first hidden layer, set a^[1] = z^[1], where g(z) = z.
+If you do this, then the model is just computing ŷ as a linear function of your input
+features, x. 
+
+If a^[1] = z^[1] = w^[1]*x + b^[1]
+a^[2] = z^[2] = w^[2]*a^[1] + b^[2]
+              = w^[2]*(w^[1]*x + b^[1]) + b^[2]
+              = (w^[2]*w^[1])*x + (w^[2]*b^[1] + b^[2])
+              = W'*x + b'
+
+If you were to use linear/identity activation functions, then the NN is just outputting a linear function
+of the input. No matter how many layers your NN has, you're just computing a linear function, so you
+may as well have zero hidden layers and use logistic regression instead.
+
+One place you may want to use a linear activation function g(z) = z is if you're doing ML on the 
+regression problem. 
+If y ∈ R, like the price of a house, then it may be ok to have a linear activation function so you
+can ensure ŷ is also a real number going from -inf to inf. This is in the output layer only.
+
+That doesn't mean the hidden units shouldn't be using a linear activation function. Use ReLU or tanh.
