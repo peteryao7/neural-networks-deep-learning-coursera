@@ -134,3 +134,60 @@ multiplication works, and we'll get a giant matrix Z^[1] holding z^[1](1), z^[1]
 
 Note that x = A^[0], so x^(i) = a^[0](i), so there's a certain symmetry to the equations where
 Z^[1] = W^[1] * A^[0] + b^[1].
+
+==================================================
+
+Activation Functions
+
+In FP, we use the sigmoid function on z^[1] to calculate a^[1] and a^[2], where the function is
+a = 1 / (1 + e^-z)
+
+The sigmoid function goes between 0 and 1, but we can also use the hyperbolic tangent function,
+a = tanh(z) = (e^z - e^-z) / (e^z + e^-z) which goes between -1 and +1.
+It's essentially the sigmoid function shifted down to cross the origin.
+
+If you set the sigmoid function σ(z^[1]) = tanh(z^[1]), it almost always works better than the sigmoid
+function because the values between +1 and -1, the mean of the activations from the hidden layer
+will typically have a mean closer to 0. It centers your data closer to 0 than around 0.5, making
+learning for the next layer a bit easier.
+
+In practice, the sigmoid function is strictly superior to the tanh function, except for the output layer,
+since you want an output between 0 and 1 rather than between -1 and 1. 
+
+For that reason, you may want to stick to the sigmoid function for binary classification as well.
+
+One downside for both functions: if z is either very large or very small, then the gradient/derivative
+of the function is very small, being close to 0, and slow down GD.
+    - we can use the rectify linear unit, ReLU, a = max(0,z)
+    - so the derivative is 1 when z > 0 and 0 when z < 0 (not differentiable at z = 0)
+    - if you don't know what activation function to use, use ReLU
+    - in practice, most of your hidden units will be z > 0, so learning can still be fast for 
+      most training examples
+
+Leaky ReLU
+    - instead of setting the derivative of z < 0 to 0, it has a very slight slope
+    - usually works better than ReLU, but not used as much in practice
+
+-----
+
+Pros and cons of activation functions
+
+Sigmoid
+    - a = 1 / (1 + e^-z)
+    - never use this except for the output layer or binary classification
+tanh
+    - a = (e^z - e^-z) / (e^z + e^-z)
+    - strictly superior to sigmoid in all other cases
+ReLU
+    - a = max(0,z)
+    - if you're not sure what to use, use this one
+Leaky ReLU
+    - a = max(0.01*z,z)
+
+-----
+
+There are a lot of choices of how to build your NN, depending on how you choose # hidden layers, 
+activation function, initialization etc.
+
+If you're not sure what works best, try them all out and evaluate on a development set, and see
+which one works better, then go with that.
