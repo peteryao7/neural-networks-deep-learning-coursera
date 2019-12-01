@@ -20,3 +20,32 @@ Whereas for logistic regression, we had a z and a calculation, we have multiple 
 to calculate the loss function. 
 
 Same thing for using BP to calculate da and dz backwards.
+
+==================================================
+
+NN Representation
+
+NN with a single hidden layer:
+        O
+x_1
+        O
+x_2          O -> ŷ
+        O
+x_3
+        O
+
+Input layer: the first layer (the x's)
+Hidden layer: the layers you don't see in the training set (the one and only one is the 4 O's)
+Output layer: the last layer (the lone O)
+
+Values of input features denatoed as a^[0] = x
+a also stands for activations, refers to the values that the different layers are passing on to subsequent layers
+a^[1] is comprised of the values a_1^[1], a_2^[1], a_3^[1], a_4^[1] from the hidden layer in a column vector
+a^[2] is just a real number, so ŷ = a^[2]
+
+The above example is also known as a 2 layer NN. The layers counted are the hidden and output layers, not the
+inner layer.
+
+The hidden and output layers have parameters associated with them.
+    - hidden layers have w^[i], b^[i] params, in this example w^[1] is a 4x3 matrix and b^[1] a 4x1 matrix
+    - the output layer has params w^[2] of dimension 1x4 and b^[2] of dimension 1x1
