@@ -264,3 +264,54 @@ g(z) = max(0.01*z,z)
 g'(z) = 0.01 if z < 0
         1 if z > 0
         not differentiable if z = 0, but you can set it to be 0.01 or 1 either way
+
+==================================================
+
+GD for NN
+
+The equations needed to compute BP here, intuition in the next section.
+
+-----
+
+Parameters: w^[1], b^[1], w^[2], b^[2]
+For n_x = n^[0] input features, n^[1] hidden units, n^[2] = output units (1 in our case)
+Then w^[1] ∈ R^(n^[1] x n^[0]), b^[1] ∈ R^(n^[1] x 1), w^[2] ∈ R^(n^[2] x n^[1]), b^[2] ∈ R^(n^[2] x 1)
+
+Cost function: J(w^[1], b^[1], w^[2], b^[2]) = 1/m * sum(i=1, n) ℒ(ŷ,y), where ŷ = a^[2]
+
+Gradient descent:
+Initialize parameters randomly
+repeat {
+    compute predictions (ŷ^(i), i=1,...,m)
+    dw^[1] = ∂J/∂w^[1], db^[1] = ∂J/∂b^[1], dw^[2] = ∂J/∂w^[2], db^[2] = ∂J/∂b^[2]
+    w^[1] := w^[1] - α*dw^[1]
+    b^[1] := b^[1] - α*db^[1]
+    w^[2] := w^[2] - α*dw^[2]
+    b^[2] := b^[2] - α*db^[2]
+}
+repeat until your params look like they're converging
+
+But how do we compute the dw and db terms?
+
+-----
+
+Formulas for computing derivatives
+
+For FP:
+    Z^[1] = W^[1] * X + b^[1]
+    A^[1] = g^[1] * (Z^[1])
+    Z^[2] = W^[2] * A^[1] + b^[2]
+    A^[2] = g^[2] * (Z^[2])
+
+For BP (derivatives):
+    // Let Y = [y^(1) y^(2) ... y^(m)], a 1 x m matrix listing your m examples horizontally
+    dZ^[2] = A^[2] - Y
+    dW^[2] = 1/m * dZ^[2] * A^[1]^T
+    db^[2] = 1/m * np.sum(dZ^[2], axis = 1, keepdims = True) 
+    // axis = 1 so we're summing horizontally 
+    // keepdims prevents Python from outputing the funny rank 1 arrays where the dimension was (n,)
+    dZ^[1] = (W^[2]^T * dZ^[2]) * (g^[1]' * Z^[1]) // the middle * is an element-wise product, or dot product
+    dW^[1] = 1/m * dZ^[1] * X^T
+    db^[1] = 1/m * np.sum(dZ^[1], axis = 1, keepdims = True)
+
+Instead of using keepdims, we could call reshape on np.sum to form the sum into the correct dimension.
