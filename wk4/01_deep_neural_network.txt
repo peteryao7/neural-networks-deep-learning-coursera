@@ -27,3 +27,42 @@ W^[l] = weights for computing z^[l]
 b^[l] also used to compute z^[l]
 x = a^[0]
 a[L] = ŷ
+
+==================================================
+
+Forward Propagation in a Deep Network
+
+For the hidden layers in a deep NN with 5 units and given a single training example x:
+    Activations of layer 1:
+        z^[1] = W^[1] * x + b^[1]
+              = W^[1] * a^[0] + b^[1]
+        a^[1] = g^[1](z^[1])
+    Activations of layer 2:
+        z^[2] = W^[2] * a^[1] + b^[2]
+        a^[2] = g^[2](z^[2])
+    ...
+    Activations of the output layer:
+        z^[4] = W^[4] * a^[3] + b^[4]
+        a^[4] = g^[4](z^[4])
+              = ŷ
+
+Note x = a^[0], so we can substitute that in the formula for x.
+
+General formulas:
+    z^[l] = W^[l] * a^[l-1] + b^[l]
+    a^[l] = g^[l](z^[l])
+
+Vectorizing the formulas:
+    Z^[1] = W^[1] * X + b^[1]
+          = W^[1] * A^[0] + b^[1]
+    A^[1] = g^[1](Z^[1])
+    Z^[2] = W^[2] * A^[1] + b^[2]
+    A^[2] = g^[2](Z^[2])
+
+    Ŷ = g(Z^[4]) = A^[4]
+
+Note X = A^[0], so we can substitute that in the formula for X.
+
+Looking at the vectorized formulas, it looks like we need an explicit for loop to loop over the layers,
+in this case for l = 1...4.
+But there's no way to go around it, so looping around the layers is fine.
