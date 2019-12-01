@@ -49,3 +49,35 @@ inner layer.
 The hidden and output layers have parameters associated with them.
     - hidden layers have w^[i], b^[i] params, in this example w^[1] is a 4x3 matrix and b^[1] a 4x1 matrix
     - the output layer has params w^[2] of dimension 1x4 and b^[2] of dimension 1x1
+
+==================================================
+
+Computing a NN's Output
+
+In logistic regression, a "node" represents 2 calculations for z and a.
+A NN just does that many more times.
+
+-----
+
+Going back to our 2 layer NN example:
+
+The first node in our 4-node hidden layer will calculate z_1^[1] = w^[1]^T*x+b^[1] and a_1^[1] = σ(z_1^[1])
+The subscript number is the node in the layer and the bracket superscript is the layer
+
+The second node in the 4-node hidden layer calculates z_2^[1] = w_2^[1]^T*x + b_2^[1] and a_2^[1] = σ(z_2^[1])
+
+For the last 2 nodes:
+    z_3^[1] = w_3^[1]^T*x + b_3^[1] and a_3^[1] = σ(z_3^[1])
+    z_4^[1] = w_4^[1]^T*x + b_4^[1] and a_4^[1] = σ(z_4^[1])
+
+Now to vectorize the computations for z and a:
+    z^[1] = W^[1] * x + b^[1]
+    where W^[1] ∈ R^(4x3), x ∈ R(3x1), b^[1] ∈ R^(4x1)
+
+    a^[1] = σ(z^[1])
+
+    z^[2] = W^[2] * a^[1] + b^[2]
+    where W^[1] ∈ R^(1x4), b^[2] ∈ R^(1x1)
+    a^[2] = σ(z^[2])
+
+Note that x = a^[0], so you could substitute the x in z^[1] with a^[0].
