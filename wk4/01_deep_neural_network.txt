@@ -1,0 +1,29 @@
+Deep L-Layer Neural Network
+
+A deep NN is a NN that has more than one hidden layer.
+
+A NN with a single hidden layer would be a 2-layer NN, only counting the hidden and output layers.
+    - logistic regression is a 2-layer NN
+    - these are also known as "shallow" NNs
+
+-----
+
+Notation
+        O   O
+x_1     O   O   O
+x_2     O   O   O   O -> ŷ
+x_3     O   O   O
+        O   O
+
+        1   2   3   4
+
+L = # layers = 4
+n^[l] = # units in layer l
+    n^[1] = 5, n^[2] = 5, n^[3] = 3, n^[4] = n^[L] = 1
+    n^[0] = n_x = 3
+a^[l] = activations in layer l
+      = g^[l](z^[l])
+W^[l] = weights for computing z^[l]
+b^[l] also used to compute z^[l]
+x = a^[0]
+a[L] = ŷ
