@@ -317,7 +317,7 @@ For BP (derivatives):
 Instead of using keepdims, we could call reshape on np.sum to form the sum into the correct dimension.
 
 ==================================================
-8:20 - dw[1] instead of dw[2]
+
 Backpropagation Intuition
 
 x   ->

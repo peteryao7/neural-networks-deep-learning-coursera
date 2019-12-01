@@ -66,3 +66,7 @@ Note X = A^[0], so we can substitute that in the formula for X.
 Looking at the vectorized formulas, it looks like we need an explicit for loop to loop over the layers,
 in this case for l = 1...4.
 But there's no way to go around it, so looping around the layers is fine.
+
+==================================================
+6:35 - a^[l] = g^[l](z^[l])
+Getting Your Matrix Dimensions Right
