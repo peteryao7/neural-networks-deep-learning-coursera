@@ -315,3 +315,60 @@ For BP (derivatives):
     db^[1] = 1/m * np.sum(dZ^[1], axis = 1, keepdims = True)
 
 Instead of using keepdims, we could call reshape on np.sum to form the sum into the correct dimension.
+
+==================================================
+8:20 - dw[1] instead of dw[2]
+Backpropagation Intuition
+
+x   ->
+w   ->  z = w^T*x + b  ->  a = σ(z)  ->  ℒ(a,y)
+b   ->
+
+In logistic regression, we derived:
+    da = -y/a + (1-y) / (1-a)
+    dz = a - y
+       = da * g'(z)
+    dℒ/dz = dℒ/da * da/dz = g'(z)
+
+The derivation for NN is very similar, but we do it twice since we have x going to a hidden layer,
+then going to an output layer. 
+
+-----
+
+Neural network gradients
+
+x
+W^[1] -> z^[1] = W^[1]*x+b^[1] -> a^[1] = σ(z^[1]) -> z^[2] = W^[2]*a^[1]+b^[2] -> a^[2] = σ(z^[2]) -> ℒ(a^[2],y)
+b^[1]                                                   ^
+                                                   W^[2], b^[2]
+BP goes backwards to compute:
+    da^[2] collapsed with dz^[2], not needed to explicitly calculate
+    dz^[2] = a^[2] - y
+    dW^[2] = dz^[2]*a^[1]^T
+        dw = dz*x, where w^[1] is a row vector, so a^[1] needs to be turned into a column vector
+    db^[2] = dz^[2]
+    da^[1] collapsed with dz^[1]
+    dz^[1] = (W^[2]^T*dz^[2]) * (g^[1]'*z^[1]) // where middle * is element-wise multiplication
+        W^[2] ∈ R^(n^[2] x n^[2]), z^[2], dz^[2] ∈ R^(n^[2] x 1), or 1x1 in binary classification
+        z^[1], dz^[1] ∈ R^(n^[1] x 1)
+        So dz^[1] ∈ R(n^[1] x 1)
+    dW^[1] = dz^[1] * x^T
+        x^T = a^[0]^T, so it's identical to dW^[2]
+    db^[1] = dz^[1]
+
+-----
+
+Vectorized implementation of GD:
+    z^[1] = W^[1]*x + b^[1]
+    a^[1] = g^[1](z^[1])
+    Z^[1] = [z^[1](1) z^[1](2) ... z^[1](m)] // stacking columns horizontally
+    Z^[1] = W^[1]*X + b^[1]
+    A^[1] = g^[1](Z^[1])
+
+The same trick also works for BP:
+    dZ^[2] = A^[2] - Y
+    dW^[2] = 1/m * dZ^[2] * A^[1]^T // 1/m is from the cost function J
+    db^[2] = 1/m * np.sum(dZ^[2], axis=1, keepdims=True)
+    dZ^[1] = W^[2]^T(dZ^[2]) * g^[1]'(Z^[1])
+    dW^[1] = 1/m * dZ^[1] * X^T
+    db^[1] = 1/m * np.sum(dZ^[1], axis=1, keepdims=True)
