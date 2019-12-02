@@ -190,3 +190,32 @@ configurations of the input bits that result in the XOR being 0 or 1.
 
 To find the right depth of your NN, try using 1 or 2 hidden layers at first, then expanding if you
 need more.
+
+==================================================
+
+Building Blocks of Deep Neural Networks
+
+Given a network with a few layers, select a layer.
+
+For layer l, we have params W^[l] and b^[l]
+For FP: input a^[l-1], output a^[l]
+    z^[l] = W^[l] * a^[l-1] + b^[l]
+    a^[l] = g^[l](z^[l])
+
+    Cache z^[l] for later.
+
+For BP: input da^[l], in cache z^[l], output da^[l-1], dw^[l], and db^[l]
+
+Once you finish implementing FP and BP, then the basic computation of the NN is:
+a^[0] -> W^[1], b^[1] -> a^[1] -> W^[2], b^[2] -> a^[2] -> ... -> a^[L] = ŷ
+              v                        v                           v
+         cache z^[1]              cache z^[2]                  cache z^[L]
+              v                        v                           v
+         W^[1], b^[1] <- da^[1]<- W^[2], b^[2] <- da^[2]<- ... <- W^[L], b^[L] <- da^[L]
+           dz^[1]                   dz^[2]                                                   
+              v                                                     v
+            dW^[1]                                                dw^[L]
+            db^[1]                                                db^[L]
+
+W^[l] = W^[l] - α * dw^[l]
+b^[l] = b^[l] - α * db^[l]
