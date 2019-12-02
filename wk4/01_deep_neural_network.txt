@@ -68,8 +68,7 @@ in this case for l = 1...4.
 But there's no way to go around it, so looping around the layers is fine.
 
 ==================================================
-6:35 - a^[l] = g^[l](z^[l])
-a and z have dimensions (n^[l],1)
+
 Getting Your Matrix Dimensions Right
 
 Working through the dimensions of your variables is a good way to debug your code
@@ -123,3 +122,71 @@ dZ^[l], dA^[l] ∈ R^(n^[l], m)
 ==================================================
 
 Why Deep Representations?
+
+Why do NNs need deep networks, or lots of hidden layers?
+
+-----
+
+Say your input is a picture of a face.
+
+The first layer of the NN is like a feature/edge detector.
+
+In this example, there are 20 hidden units visualized by little gray squares.
+One hidden unit is figuring out where the edge is in the image.
+One hidden unit is trying to find the horizontal edges in the image.
+etc.
+
+Next, once it figures out where the edges are, then it can group edges together to form parts of faces.
+A neuron might try to find an eye, or a part of a nose, or the mouth etc.
+
+Finally, once that hidden layer puts together different parts of faces, now it can
+start to detect faces in the next hidden layer.
+
+First, the network tries to find simple things, then using that to figure out more complex things.
+
+-----
+
+Ex. speech recognition system
+
+Audio -> low level audio wave form features (is the tone going up/down? is there white noise? silence?)
+      -> basic units of sounds (phonemes) 
+      -> words
+      -> phrases and sentences
+
+
+Deep NNs are compared to the human brain, where the brain starts off detecting simple things like
+edges in what your eyes see, then builds up to detect more complex things like faces. 
+
+-----
+
+Circuit theory and deep learning
+
+Informally: There are functions you can compute with a "small" L-layer deep NN that shallower networks
+require exponentially more hidden units to compute.
+
+Say you're trying to compute x_1 XOR x_2 XOR x_3 ... XOR x_n
+
+x_1 ->
+        XOR ->
+x_2 ->          
+                XOR -> y
+x_3 ->
+        XOR ->
+x_4 ->
+
+The depth of the network is O(log(n)) and the number of nodes/circuit components/# gates in the network
+isn't that big.
+
+If you're not allowed to use a NN with log(n) hidden layers,
+
+x_1 -> O ->
+x_2 -> O ->
+x_3 -> O -> O -> y
+...
+x_n -> O ->
+
+Now you need a hidden layer with 2^n nodes to compute XOR, since you need to enumerate all 2^n possible
+configurations of the input bits that result in the XOR being 0 or 1.
+
+To find the right depth of your NN, try using 1 or 2 hidden layers at first, then expanding if you
+need more.
