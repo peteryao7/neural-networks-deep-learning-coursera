@@ -103,7 +103,7 @@ b^[l] ∈ R^(n^[l], 1)
 dW^[l] ∈ R^(n^[l], n^[l-1])
 db^[l] ∈ R^(n^[l], 1)
 
-For z^[l] = g^[l](a^[l]), a^[l] should have the same dimensions as g^[l]
+For a^[l] = g^[l](z^[l]), a^[l] should have the same dimensions as g^[l]
 
 -----
 
@@ -119,3 +119,7 @@ Z^[l], A^[l] ∈ R^(n^[l], m)
 When l = 0, A^[0] = X = (n^[0], m)
 
 dZ^[l], dA^[l] ∈ R^(n^[l], m)
+
+==================================================
+
+Why Deep Representations?
