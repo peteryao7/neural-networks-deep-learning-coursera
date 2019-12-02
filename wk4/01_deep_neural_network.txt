@@ -268,3 +268,45 @@ Sometimes, when you implement a ML algorithm, there's a lot of magic because a l
 comes from the data instead of the code you wrote. It's not a lot of code, but you can feed it so
 much data that it's still surprising that the algorithm works. Much of the complexity comes from
 the data instead of thousands of lines of code.
+
+==================================================
+
+Parameters vs Hyperparameters
+
+Parameters for our model: W^[1], b^[1], W^[2], b^[2], ...
+
+Hyperparameters for your learning algorithm: 
+    - learning rate α
+        - determines how your parameters evolve
+        - how many iterations of GD you carry out
+    - # hidden layers L
+    - # hidden units n^[1], n^[2], ...
+    - choice of activation function (ReLU, sigmoid, tanh)
+
+These hyperparameters control the parameters and determine the final values of W and b.
+
+Later, more hyperparameters: momentum term, mini-batch size, regularization terms, ...
+
+-----
+
+Applied deep learning is a very empirical process (try out a lot of things and see what works)
+
+Idea -> Code -> Experiment -> Idea -> Code -> Experiment -> etc.
+
+Idea: the best value for α is 0.01
+Code: implement it and try it out
+Experiment: plot # iterations vs. cost J
+Idea: α is too low, maybe try 0.05
+etc.
+
+Then you find out in your experiment that J decreases at a decent rate compared to the # iterations,
+so that's the α you want.
+
+There are a lot of different hybrid parameters, and it's hard to know in advance the best values of
+the hyperparameters, so you just have to guess at first and go through that cycle, then iterate.
+
+Deep learning nowadays is used in a lot of ML fields, like vision, speech, NLP, online advertising,
+web search, product recommendations etc.
+
+It's also possible that the best values for the hyperparameters today will change later on; maybe
+the technologies you're using, like the GPU and CPU, are different and α needs to be tuned again.
