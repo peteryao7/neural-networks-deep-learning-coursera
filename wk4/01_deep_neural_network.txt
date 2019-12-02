@@ -239,7 +239,7 @@ BP for layer l, input da^[l]. output da^[l-1], dW^[l], and db^[l]
     da^[l-1] = W^[l]^T * dz^[l]
 
 If you take the definition of da^[l] and put it in the equation for dz^[l], then you get:
-    dz^[l] = W^[l+1]^T(dz^[l+1]) * g^[l]'(z^[l])
+    dz^[l] = W^[l+1]^Tdz^[l+1] * g^[l]'(z^[l])
 
 BP vectorized:
     dZ^[l] = dA^[l] * g^[l]'(Z^[l])
@@ -310,3 +310,36 @@ web search, product recommendations etc.
 
 It's also possible that the best values for the hyperparameters today will change later on; maybe
 the technologies you're using, like the GPU and CPU, are different and α needs to be tuned again.
+
+==================================================
+
+What Does This Have to Do With the Human Brain?
+
+Not a whole lot.
+
+FP and BP equations:
+    dZ^[L] = A^[L] - Y
+    dW^[L] = 1/m * dZ^[L] * A^[L-1]^T
+    db^[L] = 1/m * np.sum(dZ^[L], axis=1, keepdims=True)
+    dZ^[L-1] = W^[L]^TdZ^[L] * g'^[L-1](Z^[L-1])
+
+    Where * denotes element-wise multiplication
+
+    ...
+
+    dZ^[1] = W^[2]dZ^[2] * g'^[1](Z^[1])
+    dW^[1] = 1/m * dZ^[1]A^[0]^T
+
+    Note that A^[0]^T is another way to denote X^T
+
+    db^[1] = 1/m * np.sum(dZ^[1], axis=1, keepdims=True)
+
+Say there's a logistic regression with a sigmoid activation function. It looks quite similar
+to a neuron in your nervous system, where there's an input, then sends a pulse of electricity
+down to the axon, then a long wire down to other neurons. 
+
+But today, even neuroscientists believe a neuron is a lot more complex than that and still
+aren't fully sure what they're doing.
+
+We also still don't know whether humans are using an algorithm to learn and whether we use
+FP and BP in our learning process.
